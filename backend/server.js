@@ -7,30 +7,40 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const orderRoutes = require("./routes/order");
 
-// Create app
+// Create Express app
 const app = express();
 
-// Middleware
-app.use(cors());
+// ✅ Enable CORS for Vercel frontend + local dev
+app.use(cors({
+  origin: [
+    "https://ecommerce-store-kappa.vercel.app", // Vercel frontend
+    "http://localhost:3000"                     // Optional: local dev
+  ],
+  credentials: true
+}));
+
+// ✅ Middleware to parse JSON
 app.use(express.json());
 
-// MongoDB Connection
+// ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err.message));
+.then(() => console.log("✅ MongoDB connected"))
+.catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
-// Routes
+// ✅ Define API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/order", orderRoutes);
 
-// Health check route
+// ✅ Health check route
 app.get("/", (req, res) => {
   res.send("🛒 Shopping Cart API is running");
 });
 
-// Start server
+// ✅ Start the server (Render uses dynamic port)
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
