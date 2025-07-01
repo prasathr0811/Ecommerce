@@ -16,7 +16,7 @@ function CartPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/order/place", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
