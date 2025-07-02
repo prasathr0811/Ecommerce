@@ -2,7 +2,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 function CartPage() {
-  const { cart, removeFromCart, increaseQty, decreaseQty, clearCart } = useCart();
+  const { cart, removeFromCart, increaseQty, decreaseQty } = useCart();
   const navigate = useNavigate();
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -16,7 +16,7 @@ function CartPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function CartPage() {
 
       if (response.ok) {
         alert(`✅ Order placed for ${item.name}`);
-        removeFromCart(item.id); // remove only ordered item
+        removeFromCart(item.id); // Remove ordered item only
       } else {
         alert("❌ Order failed: " + data.error);
       }
