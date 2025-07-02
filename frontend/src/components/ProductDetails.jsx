@@ -31,13 +31,44 @@ function ProductDetails() {
     alert(`${product.name} added to cart.`);
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     if (!user) {
       alert("Please login to place an order.");
       navigate("/login");
       return;
     }
-    alert("✅ Order placed successfully!");
+
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: {
+            name: user.username,
+            email: user.email,
+            mobile: user.mobile,
+            age: user.age,
+            address: user.address,
+          },
+          product: {
+            name: product.name,
+            price: product.price,
+            image: product.image,
+          },
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Order placed successfully!");
+      } else {
+        alert("❌ Order failed: " + data.error);
+      }
+    } catch (err) {
+      console.error("Order Error:", err);
+      alert("❌ Something went wrong.");
+    }
   };
 
   const handleBack = () => {
