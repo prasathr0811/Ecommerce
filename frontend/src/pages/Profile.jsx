@@ -18,7 +18,7 @@ function Profile() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/");
-    window.location.reload();
+    window.dispatchEvent(new Event("storage"));
   };
 
   const handleChange = (e) => {
@@ -28,7 +28,7 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/update`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
