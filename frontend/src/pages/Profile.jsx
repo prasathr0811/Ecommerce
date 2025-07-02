@@ -7,10 +7,17 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user"));
-    if (stored) {
+    try {
+      const storedStr = localStorage.getItem("user");
+      if (!storedStr || storedStr === "undefined") {
+        throw new Error("Invalid or missing user data");
+      }
+
+      const stored = JSON.parse(storedStr);
       setUser(stored);
-    } else {
+    } catch (err) {
+      console.error("Invalid user in localStorage:", err);
+      localStorage.removeItem("user");
       navigate("/login");
     }
   }, [navigate]);
@@ -18,7 +25,7 @@ function Profile() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/");
-    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("storage")); // Optional: triggers updates in other tabs
   };
 
   const handleChange = (e) => {
@@ -38,13 +45,13 @@ function Profile() {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.updatedUser) {
         localStorage.setItem("user", JSON.stringify(data.updatedUser));
         setUser(data.updatedUser);
         setEdit(false);
         alert("✅ Profile updated successfully!");
       } else {
-        alert("❌ Failed to update profile: " + data.error);
+        alert("❌ Failed to update profile: " + (data.error || "Unknown error"));
       }
     } catch (error) {
       console.error("Update error:", error);
@@ -120,7 +127,12 @@ function Profile() {
         )}
         <button
           onClick={handleLogout}
-          style={{ ...styles.button, marginLeft: "10px", background: "#e53935", color: "#fff" }}
+          style={{
+            ...styles.button,
+            marginLeft: "10px",
+            background: "#e53935",
+            color: "#fff",
+          }}
         >
           Logout
         </button>
