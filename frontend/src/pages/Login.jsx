@@ -10,7 +10,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`, {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,8 +23,8 @@ function Login() {
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data));
         alert(`Logged in as ${username}`);
-        navigate("/"); // ✅ Redirect to home after login
-        window.dispatchEvent(new Event("storage")); // Sync navbar/profile
+        navigate("/"); // ✅ Redirect to home
+        window.dispatchEvent(new Event("storage")); // 🔄 Sync navbar/profile
       } else {
         alert("Login failed: " + data.error);
       }
