@@ -10,12 +10,13 @@ const orderRoutes = require("./routes/order");
 // Create Express app
 const app = express();
 
-// ✅ Enable CORS for Vercel frontend + local dev
+// ✅ Enable CORS for deployed and local frontend
 app.use(cors({
   origin: [
-    "https://ecommerce-store-kappa.vercel.app", // Vercel frontend
-    "http://localhost:3000"                     // Optional: local dev
+    "https://shopping-cart-prasath-rs-projects-9756af47.vercel.app", // ✅ your actual frontend
+    "http://localhost:3000" // ✅ local dev (optional)
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
