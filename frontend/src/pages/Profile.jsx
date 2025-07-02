@@ -28,7 +28,7 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`, {
+      const response = await fetch(`/api/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
