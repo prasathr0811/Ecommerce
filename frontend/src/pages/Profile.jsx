@@ -6,40 +6,46 @@ function Profile() {
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
 
+  // ✅ Load user from localStorage
   useEffect(() => {
     try {
-      const storedStr = localStorage.getItem("user");
-      if (!storedStr || storedStr === "undefined") {
-        throw new Error("Invalid or missing user data");
+      const stored = localStorage.getItem("user");
+      if (!stored || stored === "undefined") {
+        throw new Error("Invalid user data");
       }
 
-      const stored = JSON.parse(storedStr);
-      setUser(stored);
+      const parsedUser = JSON.parse(stored);
+      if (!parsedUser || !parsedUser._id) {
+        throw new Error("User data incomplete");
+      }
+
+      setUser(parsedUser);
     } catch (err) {
-      console.error("Invalid user in localStorage:", err);
+      console.error("User fetch error:", err);
       localStorage.removeItem("user");
       navigate("/login");
     }
   }, [navigate]);
 
+  // ✅ Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/");
     window.dispatchEvent(new Event("storage"));
   };
 
+  // ✅ Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ✅ Save updated profile
   const handleSave = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/update`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
       });
 
@@ -51,8 +57,8 @@ function Profile() {
         setEdit(false);
         alert("✅ Profile updated successfully!");
       } else {
-        const errorMessage = data?.error || "Unknown error from server";
-        alert("❌ Failed to update profile: " + errorMessage);
+        const message = data?.error || "Unknown error from server";
+        alert("❌ Failed to update profile: " + message);
       }
     } catch (error) {
       console.error("Update error:", error);
@@ -72,11 +78,19 @@ function Profile() {
       <h2>Profile</h2>
 
       <div style={styles.info}>
+        <label>Name:</label>
+        <input
+          disabled={!edit}
+          name="name"
+          value={user.name || ""}
+          onChange={handleChange}
+          style={styles.input}
+        />
         <label>Username:</label>
         <input
           disabled={!edit}
           name="username"
-          value={user.username}
+          value={user.username || ""}
           onChange={handleChange}
           style={styles.input}
         />
@@ -85,7 +99,7 @@ function Profile() {
           disabled={!edit}
           name="email"
           type="email"
-          value={user.email}
+          value={user.email || ""}
           onChange={handleChange}
           style={styles.input}
         />
@@ -93,7 +107,7 @@ function Profile() {
         <input
           disabled={!edit}
           name="mobile"
-          value={user.mobile}
+          value={user.mobile || ""}
           onChange={handleChange}
           style={styles.input}
         />
@@ -101,7 +115,7 @@ function Profile() {
         <input
           disabled={!edit}
           name="age"
-          value={user.age}
+          value={user.age || ""}
           onChange={handleChange}
           style={styles.input}
         />
@@ -109,7 +123,7 @@ function Profile() {
         <textarea
           disabled={!edit}
           name="address"
-          value={user.address}
+          value={user.address || ""}
           onChange={handleChange}
           rows={2}
           style={styles.input}
@@ -118,22 +132,13 @@ function Profile() {
 
       <div style={{ marginTop: "15px" }}>
         {edit ? (
-          <button onClick={handleSave} style={styles.button}>
-            Save
-          </button>
+          <button onClick={handleSave} style={styles.button}>Save</button>
         ) : (
-          <button onClick={() => setEdit(true)} style={styles.button}>
-            Edit
-          </button>
+          <button onClick={() => setEdit(true)} style={styles.button}>Edit</button>
         )}
         <button
           onClick={handleLogout}
-          style={{
-            ...styles.button,
-            marginLeft: "10px",
-            background: "#e53935",
-            color: "#fff",
-          }}
+          style={{ ...styles.button, marginLeft: "10px", background: "#e53935", color: "#fff" }}
         >
           Logout
         </button>
