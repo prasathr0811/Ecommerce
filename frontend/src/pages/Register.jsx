@@ -34,7 +34,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`, {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function Register() {
 
       if (response.ok) {
         alert("Registered successfully! Please login.");
-        navigate("/login"); // ✅ fixed: now goes to login
+        navigate("/login");
       } else {
         alert("Registration failed: " + data.error);
       }
