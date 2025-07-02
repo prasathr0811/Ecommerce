@@ -25,7 +25,7 @@ function Profile() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/");
-    window.dispatchEvent(new Event("storage")); // Optional: triggers updates in other tabs
+    window.dispatchEvent(new Event("storage"));
   };
 
   const handleChange = (e) => {
@@ -51,7 +51,8 @@ function Profile() {
         setEdit(false);
         alert("✅ Profile updated successfully!");
       } else {
-        alert("❌ Failed to update profile: " + (data.error || "Unknown error"));
+        const errorMessage = data?.error || "Unknown error from server";
+        alert("❌ Failed to update profile: " + errorMessage);
       }
     } catch (error) {
       console.error("Update error:", error);
