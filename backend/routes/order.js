@@ -3,26 +3,26 @@ const router = express.Router();
 const Order = require("../models/Order");
 const nodemailer = require("nodemailer");
 
-// POST /api/order/place
-router.post("/place", async (req, res) => {
+// POST /api/order
+router.post("/", async (req, res) => {
   const { user, product } = req.body;
 
   try {
-    // ✅ Save to MongoDB
+    // ✅ Save to MongoDB with correct field names
     const order = new Order({
-      username: user.name,
+      name: user.name,
       email: user.email,
       mobile: user.mobile,
+      age: user.age,
       address: user.address,
       productName: product.name,
-      productPrice: product.price,
+      price: product.price,
+      quantity: product.quantity || 1,
       productImage: product.image || "",
-      quantity: product.quantity || 1, // ✅ New
     });
 
     await order.save();
 
-    // ✅ Console log
     console.log("✅ Order placed:");
     console.log({
       name: user.name,
@@ -35,7 +35,6 @@ router.post("/place", async (req, res) => {
       quantity: product.quantity || 1,
     });
 
-    // ✅ Email transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -44,7 +43,6 @@ router.post("/place", async (req, res) => {
       },
     });
 
-    // ✅ Email body
     const emailBody = `
 ✅ Order Confirmation
 
@@ -61,7 +59,6 @@ Quantity: ${product.quantity || 1}
 Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
 `;
 
-    // ✅ Send to both user and admin
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: [user.email, process.env.ADMIN_EMAIL || process.env.EMAIL_USER],
@@ -69,7 +66,6 @@ Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
       text: emailBody,
     };
 
-    // ✅ Send email
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.error("❌ Email send failed:", err.message);
@@ -92,5 +88,3 @@ Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
 });
 
 module.exports = router;
-
-
