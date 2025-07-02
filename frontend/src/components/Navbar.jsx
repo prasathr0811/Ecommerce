@@ -12,19 +12,18 @@ function Navbar() {
   const { cart } = useCart();
   const navigate = useNavigate();
 
-  // Load user on mount
   useEffect(() => {
-    const raw = localStorage.getItem("user");
-    const stored = raw && raw !== "undefined" ? JSON.parse(raw) : null;
-    setUser(stored);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "undefined") {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
-  // Sync user across tabs
   useEffect(() => {
     const syncUser = () => {
       const raw = localStorage.getItem("user");
-      const stored = raw && raw !== "undefined" ? JSON.parse(raw) : null;
-      setUser(stored);
+      const parsed = raw && raw !== "undefined" ? JSON.parse(raw) : null;
+      setUser(parsed);
     };
     window.addEventListener("storage", syncUser);
     return () => window.removeEventListener("storage", syncUser);
@@ -39,7 +38,7 @@ function Navbar() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: loginUsername, password: loginPassword }),
@@ -54,14 +53,14 @@ function Navbar() {
         setShowLogin(false);
         setLoginUsername("");
         setLoginPassword("");
-        alert("Login successful");
+        alert("✅ Login successful");
         navigate("/");
       } else {
-        alert("Login failed: " + data.error);
+        alert("❌ Login failed: " + data.error);
       }
     } catch (err) {
       console.error("Login error:", err);
-      alert("Something went wrong. Try again.");
+      alert("❌ Something went wrong.");
     }
   };
 
@@ -104,6 +103,7 @@ function Navbar() {
         <div style={styles.navLinks}>
           <Link to="/" style={styles.link}>Home</Link>
           <Link to="/about" style={styles.link}>About</Link>
+
           <button onClick={handleCartClick} style={{ ...styles.link, background: "transparent", border: "none", cursor: "pointer" }}>
             Cart {user && cart.length > 0 && <span style={styles.badge}>{cart.length}</span>}
           </button>
