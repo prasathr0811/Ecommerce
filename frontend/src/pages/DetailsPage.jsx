@@ -36,7 +36,7 @@ function DetailsPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
