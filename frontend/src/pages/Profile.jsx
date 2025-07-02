@@ -28,7 +28,7 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`/api/auth/update`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -42,13 +42,13 @@ function Profile() {
         localStorage.setItem("user", JSON.stringify(data.updatedUser));
         setUser(data.updatedUser);
         setEdit(false);
-        alert("Profile updated successfully!");
+        alert("✅ Profile updated successfully!");
       } else {
-        alert("Failed to update profile: " + data.error);
+        alert("❌ Failed to update profile: " + data.error);
       }
     } catch (error) {
       console.error("Update error:", error);
-      alert("Error updating profile.");
+      alert("❌ Error updating profile.");
     }
   };
 
@@ -120,7 +120,7 @@ function Profile() {
         )}
         <button
           onClick={handleLogout}
-          style={{ ...styles.button, marginLeft: "10px", background: "#e53935" }}
+          style={{ ...styles.button, marginLeft: "10px", background: "#e53935", color: "#fff" }}
         >
           Logout
         </button>
