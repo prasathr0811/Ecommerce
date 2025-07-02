@@ -11,7 +11,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {
@@ -25,15 +25,15 @@ function Login() {
 
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data));
-        alert(`Logged in as ${username}`);
-        navigate("/"); // ✅ Redirect to home
-        window.dispatchEvent(new Event("storage")); // 🔄 Sync navbar/profile
+        alert(`✅ Logged in as ${username}`);
+        navigate("/");
+        window.dispatchEvent(new Event("storage")); // sync navbar/profile
       } else {
-        alert("Login failed: " + data.error);
+        alert("❌ Login failed: " + data.error);
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Something went wrong. Please try again.");
+      alert("❌ Something went wrong. Please try again.");
     }
   };
 
@@ -111,4 +111,3 @@ const styles = {
 };
 
 export default Login;
-
