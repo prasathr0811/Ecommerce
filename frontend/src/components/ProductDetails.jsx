@@ -39,7 +39,7 @@ function ProductDetails() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,7 +102,6 @@ function ProductDetails() {
           justifyContent: "center",
         }}
       >
-        {/* Product Image */}
         <img
           src={product.image}
           alt={product.name}
@@ -116,7 +115,6 @@ function ProductDetails() {
           }}
         />
 
-        {/* Product Info */}
         <div style={{ flex: "1", minWidth: "280px" }}>
           <h2>{product.name}</h2>
           <p style={{ fontWeight: "bold", fontSize: "18px" }}>₹{product.price}</p>
