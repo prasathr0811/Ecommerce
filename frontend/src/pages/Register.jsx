@@ -35,7 +35,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/register`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
         {
           method: "POST",
           headers: {
@@ -180,4 +180,3 @@ const styles = {
 };
 
 export default Register;
-
