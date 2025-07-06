@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 9; // ✅ Show 9 items per page
+  const itemsPerPage = 9; // ✅ Display 9 products per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -19,13 +19,12 @@ function Home() {
     : products;
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentPage = Math.min(Math.max(1, pageParam), totalPages); // Ensure within range
+  const currentPage = Math.min(Math.max(1, pageParam), totalPages); // Ensure within bounds
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
-    // If page out of bounds due to filtering
     if (currentPage !== pageParam) {
       setSearchParams({ search: query, page: currentPage.toString() });
     }
@@ -41,11 +40,12 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
+          {/* ✅ Products Grid */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)", // ✅ 3 per row
-              gap: "30px",
+              gridTemplateColumns: "repeat(3, 1fr)", // ✅ 3 in a row
+              gap: "16px", // ✅ Tighter spacing
               justifyContent: "center",
             }}
           >
@@ -54,7 +54,7 @@ function Home() {
             ))}
           </div>
 
-          {/* Pagination Controls */}
+          {/* ✅ Pagination Controls */}
           <div style={{ marginTop: "30px", textAlign: "center" }}>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
