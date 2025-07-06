@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 12; // ✅ Set to 12 items per page
+  const itemsPerPage = 9; // ✅ Show 9 items per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -19,12 +19,13 @@ function Home() {
     : products;
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentPage = Math.min(Math.max(1, pageParam), totalPages);
+  const currentPage = Math.min(Math.max(1, pageParam), totalPages); // Ensure within range
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
+    // If page out of bounds due to filtering
     if (currentPage !== pageParam) {
       setSearchParams({ search: query, page: currentPage.toString() });
     }
@@ -40,21 +41,23 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
-          {/* ✅ Grid layout: 4 items per row */}
+          {/* Grid Layout */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
               gap: "20px",
-              justifyItems: "center",
             }}
           >
             {currentProducts.map((product) => (
-              <ProductCard key={product.id} product={product} page={currentPage} />
+              <div key={product.id} style={{ flex: "1 0 30%", maxWidth: "30%" }}>
+                <ProductCard product={product} page={currentPage} />
+              </div>
             ))}
           </div>
 
-          {/* ✅ Pagination Controls */}
+          {/* Pagination Controls */}
           <div style={{ marginTop: "30px", textAlign: "center" }}>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
