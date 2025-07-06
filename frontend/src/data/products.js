@@ -34,12 +34,12 @@ const products = [
   },
   {
     id: 3,
-    name: "Redmi K50i 5G",
-    price: 20999,
+    name: "Apple iPhone 15",
+    price: 60000,
     image: "https://m.media-amazon.com/images/I/71d7rfSl0wL._SX679_.jpg",
     rating: 4.5,
     category: "mobile",
-    ram: "6GB",
+    ram: "8GB",
     storage: "128GB",
     description: "Dimensity 8100, LiquidCool tech, 144Hz display.",
     features: [
@@ -50,8 +50,8 @@ const products = [
   },
   {
     id: 4,
-    name: "Redmi Note 12 Pro+",
-    price: 29999,
+    name: "iPhone 16 Pro Max",
+    price: 135900,
     image: "https://m.media-amazon.com/images/I/81dT7CUY6GL._SX679_.jpg",
     rating: 4.4,
     category: "mobile",
@@ -130,7 +130,7 @@ const products = [
   },
   {
     id: 9,
-    name: "Vivo V27 5G",
+    name: "iQOO Z6Lite",
     price: 32999,
     image: "https://m.media-amazon.com/images/I/61VbKHdE0rL._SX679_.jpg",
     rating: 4.3,
@@ -146,7 +146,7 @@ const products = [
   },
   {
     id: 10,
-    name: "Realme C55",
+    name: "OnePlus 13R",
     price: 10999,
     image: "https://m.media-amazon.com/images/I/71V--WZVUIL._SX679_.jpg",
     rating: 4.2,
@@ -164,7 +164,7 @@ const products = [
   // ✅ Laptops (5)
   {
     id: 11,
-    name: "HP 15s Ryzen 5",
+    name: "ASUS Vivobook 15",
     price: 42999,
     image: "https://m.media-amazon.com/images/I/71c0GSxtEEL._SX679_.jpg",
     rating: 4.3,
@@ -172,7 +172,7 @@ const products = [
     ram: "8GB",
     storage: "512GB SSD",
     description:
-      "HP 15s with AMD Ryzen 5 5500U, Radeon Graphics, 15.6'' FHD Display, Windows 11, Thin & Light.",
+      "ASUS Vivobook 15, Radeon Graphics, 15.6'' FHD Display, Windows 11, Thin & Light.",
     features: [
       "AMD Ryzen 5 5500U",
       "8GB DDR4 RAM",
@@ -204,28 +204,27 @@ const products = [
   },
   {
     id: 13,
-    name: "Lenovo IdeaPad Slim 3",
-    price: 44999,
+    name: "Apple MacBook Air",
+    price: 144999,
     image:
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
     rating: 4.2,
     category: "laptop",
-    ram: "8GB",
+    ram: "16GB",
     storage: "512GB SSD",
     description:
-      "Lenovo IdeaPad Slim 3 with Intel Core i5 11th Gen, 14'' FHD Display, Windows 11.",
+      "Apple MacBook Air, 14'' FHD Display, MAC OS.",
     features: [
-      "Intel Core i5 11th Gen",
-      "8GB RAM",
+      "APPLE M2",
+      "16GB RAM",
       "512GB SSD",
       "14'' Full HD Anti-glare Display",
-      "Windows 11",
       "Intel Iris Xe Graphics",
     ],
   },
   {
     id: 14,
-    name: "Dell Inspiron 15",
+    name: "HONOR MagicBook X 14",
     price: 50999,
     image: "https://m.media-amazon.com/images/I/71tHNTGasKL._SX679_.jpg",
     rating: 4.2,
@@ -233,7 +232,7 @@ const products = [
     ram: "8GB",
     storage: "512GB SSD",
     description:
-      "Dell Inspiron 15 with Intel Core i5 12th Gen, 15.6'' FHD Display, Windows 11, Backlit Keyboard.",
+      "HONOR MagicBook X 14, 15.6'' FHD Display, Windows 11, Backlit Keyboard.",
     features: [
       "Intel Core i5 12th Gen",
       "8GB DDR4 RAM",
@@ -245,7 +244,7 @@ const products = [
   },
   {
     id: 15,
-    name: "Acer Swift 3",
+    name: "HP 15s",
     price: 57999,
     image: "https://m.media-amazon.com/images/I/71f2lQ3ESWL._SX679_.jpg",
     rating: 4.4,
@@ -253,7 +252,7 @@ const products = [
     ram: "16GB",
     storage: "512GB SSD",
     description:
-      "Acer Swift 3 with Intel Core i5 11th Gen, 16GB RAM, 512GB SSD, 14'' FHD Display, Windows 11.",
+      "HP 15s with Intel Core i5 11th Gen, 16GB RAM, 512GB SSD, 14'' FHD Display, Windows 11.",
     features: [
       "Intel Core i5 11th Gen",
       "16GB LPDDR4X RAM",
