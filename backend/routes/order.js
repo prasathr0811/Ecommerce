@@ -3,7 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const nodemailer = require("nodemailer");
 
-// ✅ POST /api/order/place
+// POST /api/order/place
 router.post("/place", async (req, res) => {
   const { user, product } = req.body;
 
@@ -58,7 +58,7 @@ router.post("/place", async (req, res) => {
         <p><strong>Age:</strong> ${user.age}</p>
         <p><strong>Address:</strong> ${user.address}</p>
         <p><strong>Price:</strong> ₹${product.price}</p>
-        <p><strong>Product Name:</strong> ${product.name}</p> <!-- ADDED AGAIN HERE -->
+        <p><strong>Product Name:</strong> ${product.name}</p>
         <p><strong>Quantity:</strong> ${product.quantity || 1}</p>
         <p><strong>Order Time:</strong> ${new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
@@ -96,4 +96,3 @@ router.post("/place", async (req, res) => {
 });
 
 module.exports = router;
-
