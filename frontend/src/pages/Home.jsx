@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 9;
+  const itemsPerPage = 9; // ✅ Show 9 items per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -43,10 +43,10 @@ function Home() {
         <>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)", // ✅ 3 per row
+              gap: "30px",
               justifyContent: "center",
-              gap: "20px",
             }}
           >
             {currentProducts.map((product) => (
