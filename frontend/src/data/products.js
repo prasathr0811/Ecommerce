@@ -363,20 +363,6 @@ const products = [
   },
   {
     id: 23,
-    name: "realme narzo N53 (Feather Black, 64 GB)",
-    price: 7999,
-    image: "https://m.media-amazon.com/images/I/71DSxfKzkJL._SX679_.jpg",
-    rating: 4.5,
-    category: "mobile",
-    description: "Budget smartphone with 6.74'' display, 5000mAh battery, and 33W fast charging.",
-    features: [
-      "6.74'' HD+ Display",
-      "5000mAh Battery",
-      "33W SuperVOOC Charging"
-    ]
-  },
-  {
-    id: 24,
     name: "Fastrack Reflex Vox Smartwatch",
     price: 2299,
     image: "https://m.media-amazon.com/images/I/61IMRs+o0iL._SX679_.jpg",
@@ -390,7 +376,7 @@ const products = [
     ]
   },
   {
-    id: 25,
+    id: 24,
     name: "The Psychology of Money",
     price: 349,
     image: "https://m.media-amazon.com/images/I/71g2ednj0JL._SY466_.jpg",
