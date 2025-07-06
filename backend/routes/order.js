@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   const { user, product } = req.body;
 
   try {
-    // ✅ Save to MongoDB with correct field names
+    // ✅ Save to MongoDB
     const order = new Order({
       name: user.name,
       email: user.email,
@@ -35,6 +35,7 @@ router.post("/", async (req, res) => {
       quantity: product.quantity || 1,
     });
 
+    // ✅ Nodemailer setup
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -43,27 +44,36 @@ router.post("/", async (req, res) => {
       },
     });
 
-    const emailBody = `
-✅ Order Confirmation
+    // ✅ HTML email with image
+    const emailHTML = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2>✅ Order Confirmation</h2>
 
-Name: ${user.name}
-Email: ${user.email}
-Mobile: ${user.mobile}
-Age: ${user.age}
-Address: ${user.address}
+        <img src="${product.image}" alt="${product.name}" style="max-width: 300px; border-radius: 10px; margin: 15px 0;" />
 
-Product: ${product.name}
-Price: ₹${product.price}
-Quantity: ${product.quantity || 1}
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Mobile:</strong> ${user.mobile}</p>
+        <p><strong>Age:</strong> ${user.age}</p>
+        <p><strong>Address:</strong> ${user.address}</p>
 
-Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
-`;
+        <hr style="margin: 15px 0;" />
+
+        <p><strong>Product:</strong> ${product.name}</p>
+        <p><strong>Price:</strong> ₹${product.price}</p>
+        <p><strong>Quantity:</strong> ${product.quantity || 1}</p>
+
+        <p><strong>Time:</strong> ${new Date().toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        })}</p>
+      </div>
+    `;
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: [user.email, process.env.ADMIN_EMAIL || process.env.EMAIL_USER],
       subject: "✅ Order Placed Successfully",
-      text: emailBody,
+      html: emailHTML, // ✅ changed from `text:` to `html:`
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
