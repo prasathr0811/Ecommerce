@@ -22,7 +22,6 @@ router.post("/place", async (req, res) => {
 
     await order.save();
 
-    // ✅ Log to terminal
     console.log("✅ Order saved to MongoDB");
     console.log("Order Summary:");
     console.log(`Customer Name : ${user.name}`);
@@ -38,7 +37,6 @@ router.post("/place", async (req, res) => {
       })}`
     );
 
-    // ✅ Setup mail transport
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -47,7 +45,6 @@ router.post("/place", async (req, res) => {
       },
     });
 
-    // ✅ Email content
     const emailHTML = `
       <div style="font-family: Arial, sans-serif;">
         <h2>✅ Order Confirmation</h2>
@@ -61,7 +58,7 @@ router.post("/place", async (req, res) => {
         <p><strong>Age:</strong> ${user.age}</p>
         <p><strong>Address:</strong> ${user.address}</p>
         <p><strong>Price:</strong> ₹${product.price}</p>
-        <p><strong>Product Name:</strong> ${product.name}</p> <!-- ✅ ADDED AGAIN HERE -->
+        <p><strong>Product Name:</strong> ${product.name}</p> <!-- ADDED AGAIN HERE -->
         <p><strong>Quantity:</strong> ${product.quantity || 1}</p>
         <p><strong>Order Time:</strong> ${new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
@@ -77,7 +74,6 @@ router.post("/place", async (req, res) => {
       html: emailHTML,
     };
 
-    // ✅ Send email
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.error("❌ Email send failed:", err.message);
@@ -100,3 +96,4 @@ router.post("/place", async (req, res) => {
 });
 
 module.exports = router;
+
