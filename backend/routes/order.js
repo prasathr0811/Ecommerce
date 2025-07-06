@@ -3,11 +3,17 @@ const router = express.Router();
 const Order = require("../models/Order");
 const nodemailer = require("nodemailer");
 
-// POST /api/order/place
+// ✅ POST /api/order/place
 router.post("/place", async (req, res) => {
   const { user, product } = req.body;
 
   try {
+    // ✅ Basic validation
+    if (!user || !product) {
+      return res.status(400).json({ error: "User and product data are required" });
+    }
+
+    // ✅ Save order to MongoDB
     const order = new Order({
       name: user.name,
       email: user.email,
@@ -31,12 +37,9 @@ router.post("/place", async (req, res) => {
     console.log(`Product       : ${product.name}`);
     console.log(`Quantity      : ${product.quantity || 1}`);
     console.log(`Price         : ₹${product.price}`);
-    console.log(
-      `Order Time    : ${new Date().toLocaleString("en-IN", {
-        timeZone: "Asia/Kolkata",
-      })}`
-    );
+    console.log(`Order Time    : ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`);
 
+    // ✅ Setup mail transport
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -45,6 +48,7 @@ router.post("/place", async (req, res) => {
       },
     });
 
+    // ✅ Email HTML content
     const emailHTML = `
       <div style="font-family: Arial, sans-serif;">
         <h2>✅ Order Confirmation</h2>
@@ -57,16 +61,15 @@ router.post("/place", async (req, res) => {
         <p><strong>Mobile:</strong> ${user.mobile}</p>
         <p><strong>Age:</strong> ${user.age}</p>
         <p><strong>Address:</strong> ${user.address}</p>
-        <p><strong>Price:</strong> ₹${product.price}</p>
         <p><strong>Product Name:</strong> ${product.name}</p>
+        <p><strong>Price:</strong> ₹${product.price}</p>
         <p><strong>Quantity:</strong> ${product.quantity || 1}</p>
-        <p><strong>Order Time:</strong> ${new Date().toLocaleString("en-IN", {
-          timeZone: "Asia/Kolkata",
-        })}</p>
+        <p><strong>Order Time:</strong> ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</p>
         <p>Thanks for shopping with <strong>Shopping Cart</strong>!</p>
       </div>
     `;
 
+    // ✅ Email options
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: [user.email, process.env.ADMIN_EMAIL || process.env.EMAIL_USER],
@@ -74,6 +77,7 @@ router.post("/place", async (req, res) => {
       html: emailHTML,
     };
 
+    // ✅ Send email
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.error("❌ Email send failed:", err.message);
