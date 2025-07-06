@@ -16,7 +16,7 @@ function CartPage() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/place`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function CartPage() {
 
       if (response.ok) {
         alert(`✅ Order placed for ${item.name}`);
-        removeFromCart(item.id); // Remove ordered item only
+        removeFromCart(item.id); // remove only this item
       } else {
         alert("❌ Order failed: " + data.error);
       }
