@@ -44,12 +44,16 @@ router.post("/", async (req, res) => {
       },
     });
 
-    // ✅ HTML email with image
+    // ✅ Email HTML with product image and bold product name below
     const emailHTML = `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2>✅ Order Confirmation</h2>
 
-        <img src="${product.image}" alt="${product.name}" style="max-width: 300px; border-radius: 10px; margin: 15px 0;" />
+        <div style="text-align: center; margin: 20px 0;">
+          <img src="${product.image}" alt="${product.name}" 
+            style="max-width: 250px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+          <p style="margin-top: 10px; font-weight: bold; font-size: 16px;">${product.name}</p>
+        </div>
 
         <p><strong>Name:</strong> ${user.name}</p>
         <p><strong>Email:</strong> ${user.email}</p>
@@ -59,13 +63,14 @@ router.post("/", async (req, res) => {
 
         <hr style="margin: 15px 0;" />
 
-        <p><strong>Product:</strong> ${product.name}</p>
         <p><strong>Price:</strong> ₹${product.price}</p>
         <p><strong>Quantity:</strong> ${product.quantity || 1}</p>
 
         <p><strong>Time:</strong> ${new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
         })}</p>
+
+        <p style="margin-top: 20px;">Thank you for shopping with <strong>Shopping Cart</strong>!</p>
       </div>
     `;
 
@@ -73,9 +78,10 @@ router.post("/", async (req, res) => {
       from: process.env.EMAIL_USER,
       to: [user.email, process.env.ADMIN_EMAIL || process.env.EMAIL_USER],
       subject: "✅ Order Placed Successfully",
-      html: emailHTML, // ✅ changed from `text:` to `html:`
+      html: emailHTML,
     };
 
+    // ✅ Send email
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.error("❌ Email send failed:", err.message);
