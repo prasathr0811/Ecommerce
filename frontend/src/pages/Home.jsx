@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 9; // ✅ Display 9 products per page
+  const itemsPerPage = 9; // ✅ Show 9 products per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -19,7 +19,7 @@ function Home() {
     : products;
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentPage = Math.min(Math.max(1, pageParam), totalPages); // Ensure within bounds
+  const currentPage = Math.min(Math.max(1, pageParam), totalPages);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
@@ -40,13 +40,13 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
-          {/* ✅ Products Grid */}
+          {/* ✅ Grid with 4 items per row */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)", // ✅ 3 in a row
-              gap: "16px", // ✅ Tighter spacing
-              justifyContent: "center",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "20px",
+              justifyItems: "center",
             }}
           >
             {currentProducts.map((product) => (
@@ -54,7 +54,7 @@ function Home() {
             ))}
           </div>
 
-          {/* ✅ Pagination Controls */}
+          {/* ✅ Pagination */}
           <div style={{ marginTop: "30px", textAlign: "center" }}>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
