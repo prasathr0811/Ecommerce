@@ -7,16 +7,17 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const orderRoutes = require("./routes/order");
 
+// Create Express app
 const app = express();
 
-// Define allowed origins
+// ✅ Define allowed origins
 const allowedOrigins = [
   "https://shopping-cart-3g9l2doeg-prasath-rs-projects-9756af47.vercel.app",
   "https://shopping-cart-ruddy-gamma.vercel.app",
   "http://localhost:3000",
 ];
 
-// CORS options
+// ✅ CORS options
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -29,12 +30,14 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 };
 
+// ✅ Middleware
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Preflight handling
-
 app.use(express.json());
 
-// MongoDB connection
+// ✅ Preflight handler for all routes
+app.options("*", cors(corsOptions));
+
+// ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -42,16 +45,16 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ MongoDB connected"))
 .catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
-// Routes
+// ✅ API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/order", orderRoutes);
 
-// Health check
+// ✅ Health Check Route
 app.get("/", (req, res) => {
   res.send("🛒 Shopping Cart API is running");
 });
 
-// Start server
+// ✅ Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
