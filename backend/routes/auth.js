@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
-// ✅ REGISTER
+// REGISTER
 router.post("/register", async (req, res) => {
   const { name, username, email, password, mobile, age, address } = req.body;
 
@@ -20,14 +20,14 @@ router.post("/register", async (req, res) => {
     await newUser.save();
 
     console.log("✅ Registered user:", newUser.username);
-    res.status(201).json(newUser); // Send user object back
+    res.status(201).json(newUser);
   } catch (err) {
     console.error("❌ Registration error:", err.message);
     res.status(500).json({ error: "Server error: " + err.message });
   }
 });
 
-// ✅ LOGIN
+// LOGIN
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ✅ UPDATE PROFILE
+// UPDATE PROFILE
 router.put("/update", async (req, res) => {
   const { _id, name, username, email, mobile, age, address } = req.body;
 
@@ -61,7 +61,7 @@ router.put("/update", async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       { name, username, email, mobile, age, address },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedUser) {
@@ -69,7 +69,7 @@ router.put("/update", async (req, res) => {
     }
 
     console.log("✅ Profile updated:", updatedUser.username);
-    res.status(200).json({ updatedUser }); // ✅ WRAPPED in object
+    res.status(200).json({ updatedUser });
   } catch (err) {
     console.error("❌ Profile update error:", err.message);
     res.status(500).json({ error: "Failed to update profile: " + err.message });
