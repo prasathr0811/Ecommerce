@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 8; // ✅ Show 8 items per page
+  const itemsPerPage = 8;
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -19,13 +19,12 @@ function Home() {
     : products;
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentPage = Math.min(Math.max(1, pageParam), totalPages); // Ensure within range
+  const currentPage = Math.min(Math.max(1, pageParam), totalPages);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
-    // If page out of bounds due to filtering
     if (currentPage !== pageParam) {
       setSearchParams({ search: query, page: currentPage.toString() });
     }
@@ -41,19 +40,16 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
-          {/* Grid Layout - 4 per row */}
+          {/* Responsive Grid Layout */}
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
               gap: "20px",
             }}
           >
             {currentProducts.map((product) => (
-              <div key={product.id} style={{ flex: "1 0 23%", maxWidth: "23%" }}>
-                <ProductCard product={product} page={currentPage} />
-              </div>
+              <ProductCard key={product.id} product={product} page={currentPage} />
             ))}
           </div>
 
