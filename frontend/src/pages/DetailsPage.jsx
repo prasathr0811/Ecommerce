@@ -36,7 +36,7 @@ function DetailsPage() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/place`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -51,6 +51,7 @@ function DetailsPage() {
             name: product.name,
             price: product.price,
             image: product.image,
+            quantity: 1,
           },
         }),
       });
