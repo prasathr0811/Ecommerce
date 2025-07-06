@@ -39,7 +39,7 @@ function ProductDetails() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/place`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -76,13 +76,7 @@ function ProductDetails() {
   };
 
   return (
-    <div
-      style={{
-        padding: "40px",
-        backgroundColor: "#f9f9f9",
-        minHeight: "80vh",
-      }}
-    >
+    <div style={{ padding: "40px", backgroundColor: "#f9f9f9", minHeight: "80vh" }}>
       <button onClick={handleBack} style={{ marginBottom: "20px" }}>
         ← Back to Page {page}
       </button>
