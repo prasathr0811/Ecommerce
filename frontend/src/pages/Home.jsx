@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 9; // ✅ Show 9 products per page
+  const itemsPerPage = 12; // ✅ Set to 12 items per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -40,7 +40,7 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
-          {/* ✅ Grid with 4 items per row */}
+          {/* ✅ Grid layout: 4 items per row */}
           <div
             style={{
               display: "grid",
@@ -54,7 +54,7 @@ function Home() {
             ))}
           </div>
 
-          {/* ✅ Pagination */}
+          {/* ✅ Pagination Controls */}
           <div style={{ marginTop: "30px", textAlign: "center" }}>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
