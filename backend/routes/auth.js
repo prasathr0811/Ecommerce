@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
-// REGISTER
+// ✅ Register
 router.post("/register", async (req, res) => {
   const { name, username, email, password, mobile, age, address } = req.body;
 
@@ -11,8 +11,8 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "Username and password are required" });
     }
 
-    const existing = await User.findOne({ username });
-    if (existing) {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
       return res.status(400).json({ error: "Username already exists" });
     }
 
@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
+// ✅ Login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// UPDATE PROFILE
+// ✅ Update Profile
 router.put("/update", async (req, res) => {
   const { _id, name, username, email, mobile, age, address } = req.body;
 
