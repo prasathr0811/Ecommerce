@@ -10,7 +10,7 @@ function Home() {
   const query = searchValue.toLowerCase();
 
   const pageParam = parseInt(searchParams.get("page")) || 1;
-  const itemsPerPage = 9; // ✅ Show 9 items per page
+  const itemsPerPage = 8; // ✅ Show 8 items per page
 
   const filteredProducts = query
     ? products.filter((product) =>
@@ -41,7 +41,7 @@ function Home() {
         <p style={{ textAlign: "center", fontSize: "18px" }}>No product found.</p>
       ) : (
         <>
-          {/* Grid Layout */}
+          {/* Grid Layout - 4 per row */}
           <div
             style={{
               display: "flex",
@@ -51,7 +51,7 @@ function Home() {
             }}
           >
             {currentProducts.map((product) => (
-              <div key={product.id} style={{ flex: "1 0 30%", maxWidth: "30%" }}>
+              <div key={product.id} style={{ flex: "1 0 23%", maxWidth: "23%" }}>
                 <ProductCard product={product} page={currentPage} />
               </div>
             ))}
