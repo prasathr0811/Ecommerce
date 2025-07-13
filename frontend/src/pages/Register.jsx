@@ -35,7 +35,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+        `${import.meta.env.VITE_BACKEND_URL}/auth/register`, // <-- updated path here
         {
           method: "POST",
           headers: {
