@@ -9,17 +9,28 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", backendURL);
+
+    if (!backendURL) {
+      alert("❌ Backend URL is missing. Please check your .env file.");
+      return;
+    }
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/login`, // ✅ updated route
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const response = await fetch(`${backendURL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const contentType = response.headers.get("content-type");
+
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Received non-JSON response. Backend may not be running.");
+      }
 
       const data = await response.json();
 
@@ -29,11 +40,11 @@ function Login() {
         navigate("/");
         window.dispatchEvent(new Event("storage")); // sync navbar/profile
       } else {
-        alert("❌ Login failed: " + data.error);
+        alert("❌ Login failed: " + (data?.error || "Invalid credentials."));
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("❌ Something went wrong. Please try again.");
+      alert("❌ Login error: " + error.message);
     }
   };
 
