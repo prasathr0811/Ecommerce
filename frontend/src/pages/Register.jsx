@@ -33,24 +33,17 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
-
-    // Log the backend URL to debug in console
-    console.log("Backend URL:", backendURL);
-
-    if (!backendURL) {
-      alert("Backend URL is not configured. Please check your .env file.");
-      return;
-    }
-
     try {
-      const response = await fetch(`${backendURL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
 
@@ -58,11 +51,11 @@ function Register() {
         alert("Registered successfully! Please login.");
         navigate("/login");
       } else {
-        alert("Registration failed: " + (data?.error || "Unknown error"));
+        alert("Registration failed: " + data.error);
       }
     } catch (error) {
       console.error("Registration error:", error);
-      alert("Something went wrong. Please check your backend connection.");
+      alert("Something went wrong. Please try again.");
     }
   };
 
