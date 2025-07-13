@@ -9,42 +9,30 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
-    console.log("Backend URL:", backendURL);
-
-    if (!backendURL) {
-      alert("❌ Backend URL is missing. Please check your .env file.");
-      return;
-    }
-
     try {
-      const response = await fetch(`${backendURL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const contentType = response.headers.get("content-type");
-
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Received non-JSON response. Backend may not be running.");
-      }
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data));
         alert(`✅ Logged in as ${username}`);
-        navigate("/");
-        window.dispatchEvent(new Event("storage")); // sync navbar/profile
+        window.location.href = "/"; // ✅ Force reload after login to sync state
       } else {
-        alert("❌ Login failed: " + (data?.error || "Invalid credentials."));
+        alert("❌ Login failed: " + data.error);
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("❌ Login error: " + error.message);
+      alert("❌ Something went wrong. Please try again.");
     }
   };
 
