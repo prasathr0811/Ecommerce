@@ -38,7 +38,7 @@ function Navbar() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: loginUsername, password: loginPassword }),
@@ -54,7 +54,7 @@ function Navbar() {
         setLoginUsername("");
         setLoginPassword("");
         alert("✅ Login successful");
-        navigate("/profile");
+        navigate("/"); // ✅ go to home
       } else {
         alert("❌ Login failed: " + data.error);
       }
