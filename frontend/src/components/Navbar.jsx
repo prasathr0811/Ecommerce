@@ -38,11 +38,14 @@ function Navbar() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+        }
+      );
 
       const data = await response.json();
 
@@ -54,7 +57,7 @@ function Navbar() {
         setLoginUsername("");
         setLoginPassword("");
         alert("✅ Login successful");
-        navigate("/"); // ✅ go to home
+        navigate("/"); // Redirect to home
       } else {
         alert("❌ Login failed: " + data.error);
       }
