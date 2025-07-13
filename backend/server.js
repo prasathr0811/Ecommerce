@@ -33,8 +33,8 @@ app.use(
 );
 
 // ✅ Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/auth", authRoutes);       // changed from "/api/auth"
+app.use("/api/order", orderRoutes); // no change
 
 // ✅ Health check
 app.get("/", (req, res) => {
