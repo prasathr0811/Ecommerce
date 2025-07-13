@@ -11,7 +11,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/auth/login`, // ✅ updated route
         {
           method: "POST",
           headers: {
